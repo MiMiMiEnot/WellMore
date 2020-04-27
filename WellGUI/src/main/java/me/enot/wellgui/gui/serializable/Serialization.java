@@ -107,7 +107,11 @@ public class Serialization {
     }
 
     public static String getGUIIdByConfig(Config c){
-        return (c.origin().filename().split(File.separator)[c.origin().filename().split(File.separator).length - 1]).split("\\.")[0];
+        String[] var1 = c.origin().filename().split(File.separator);
+        Bukkit.getConsoleSender().sendMessage(var1);
+        String var2 = var1[var1.length - 1].split("\\.")[0];
+        Bukkit.getConsoleSender().sendMessage(var2);
+        return var2;
     }
 
     public static GUIItem loadItemFromConfigByKey(Config config, String key) throws SlotInvalidException {
