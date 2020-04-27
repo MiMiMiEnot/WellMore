@@ -1,0 +1,7 @@
+name: WellAuthServer
+main: me.enot.wellauthserver.WellAuthServer
+version: 1.0
+
+commands:
+  setspawn:
+    description: ""

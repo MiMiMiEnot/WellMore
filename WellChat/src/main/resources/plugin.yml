@@ -1,0 +1,10 @@
+name: ${project.artifactId}
+main: me.enot.wellchat.WellChat
+version: ${project.version}
+
+commands:
+  wellchat:
+    description: ""
+
+softdepend:
+  - PlaceholderAPI

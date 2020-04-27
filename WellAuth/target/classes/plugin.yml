@@ -1,0 +1,6 @@
+name: WellAuth
+main: me.enot.wellauth.WellAuth
+version: 1.2-SNAPSHOT
+commands:
+  wellauth:
+    description: ""

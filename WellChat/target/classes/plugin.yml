@@ -1,0 +1,10 @@
+name: WellChat
+main: me.enot.wellchat.WellChat
+version: 1.1-SNAPSHOT
+
+commands:
+  wellchat:
+    description: ""
+
+softdepend:
+  - PlaceholderAPI

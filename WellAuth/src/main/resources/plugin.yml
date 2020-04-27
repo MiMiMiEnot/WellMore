@@ -1,0 +1,6 @@
+name: ${project.artifactId}
+main: me.enot.wellauth.WellAuth
+version: ${project.version}
+commands:
+  wellauth:
+    description: ""
