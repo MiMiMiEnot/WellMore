@@ -16,8 +16,7 @@ import java.util.List;
 
 public class Message {
     private Message(){}
-
-
+    
     private static class MESSAGE_HOLDER {
         public static final Message INSTANCE = new Message();
     }

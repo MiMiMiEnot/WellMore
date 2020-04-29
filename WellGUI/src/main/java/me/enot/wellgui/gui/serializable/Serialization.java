@@ -132,7 +132,7 @@ public class Serialization {
         List<String> hasAccessMessage = loadListByAnything(config, string + HAS_ACCESS_MESSAGE);
 
         int maxSlots = config.getInt("rows") * 9;
-        if(maxSlots <= slot || slot < 0) throw new SlotInvalidException(key, slot, config);
+        if(maxSlots < slot || slot < 0) throw new SlotInvalidException(key, slot, config);
 
         return new GUIItem(key, stack, slot, guiItemType, accessPermission, noAccess, hasAccess, noAccessMessage, hasAccessMessage);
     }
