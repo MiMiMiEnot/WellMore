@@ -49,6 +49,13 @@ public class Settings {
         }
         settings = ConfigFactory.parseFile(file).resolve();
         load();
+        if (createExampleConfig()) {
+            try {
+                Files.copy(getClass().getResourceAsStream("/example.conf"), GUI_DIR.toPath());
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -61,6 +68,7 @@ public class Settings {
     private boolean hideEnchants;
     private boolean hidePlacedOn;
     private boolean hidePotionEffects;
+    private boolean createExampleConfig;
     private void load(){
         permissionReloadAll = getSettings().getString("permissions.wellgui.reload-all");
         permissionReloadConfigs = getSettings().getString("permissions.wellgui.reload-configs");
@@ -70,6 +78,7 @@ public class Settings {
         hideEnchants = getSettings().getBoolean("item-flags.hide-enchants");
         hidePlacedOn = getSettings().getBoolean("item-flags.hide-placed-on");
         hidePotionEffects = getSettings().getBoolean("item-flags.hide-potion-effects");
+        createExampleConfig = getSettings().getBoolean("create-example-gui");
     }
 
     public String getPermissionReloadAll() {
@@ -102,6 +111,10 @@ public class Settings {
 
     public boolean hidePotionEffects() {
         return hidePotionEffects;
+    }
+
+    public boolean createExampleConfig() {
+        return createExampleConfig;
     }
 
     public Config getSettings() {

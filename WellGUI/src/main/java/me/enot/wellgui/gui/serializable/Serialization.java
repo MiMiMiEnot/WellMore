@@ -161,19 +161,19 @@ public class Serialization {
     private static GUIItemType loadGUIItemType(Config c, String key){
         String string = ITEMS + key;
 
-        if(c.hasPath(key + TYPE)) {
-            switch (c.getEnum(GUIItemLogicType.class, key + TYPE)) {
+        if(c.hasPath(string + TYPE)) {
+            switch (c.getEnum(GUIItemLogicType.class, string + TYPE)) {
                 case COMMAND:
-                    List<String> commands = loadListByAnything(c, key + COMMANDS);
-                    Executor executor = c.getEnum(Executor.class, key + EXECUTOR);
+                    List<String> commands = loadListByAnything(c, string + COMMANDS);
+                    Executor executor = c.getEnum(Executor.class, string + EXECUTOR);
                     return new GUIItemCommand(executor, commands);
                 case OPEN:
-                    String id = c.getString(key + ID);
+                    String id = c.getString(string + ID);
                     return new GUIItemOpen(id);
                 case SEND:
-                    String server = c.getString(key + SERVER);
-                    int maxOnline = c.getInt(key + MAX_ONLINE);
-                    String bypassPermission = c.getString(key + BYPASS_PERMISSION);
+                    String server = c.getString(string + SERVER);
+                    int maxOnline = c.getInt(string + MAX_ONLINE);
+                    String bypassPermission = c.getString(string + BYPASS_PERMISSION);
                     return new GUIItemSend(server, maxOnline, bypassPermission);
             }
         }
