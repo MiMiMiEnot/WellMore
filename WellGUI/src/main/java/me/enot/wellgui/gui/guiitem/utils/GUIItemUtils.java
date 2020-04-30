@@ -1,5 +1,6 @@
 package me.enot.wellgui.gui.guiitem.utils;
 
+import me.enot.wellgui.configurations.Settings;
 import me.enot.wellgui.configurations.language.Replace;
 import me.enot.wellgui.gui.guiitem.GUIItem;
 import me.enot.wellgui.gui.guiitem.GUIItemCommand;
@@ -7,6 +8,7 @@ import me.enot.wellgui.utils.Message;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -44,6 +46,11 @@ public class GUIItemUtils {
         ItemStack s = stack.clone();
         if(s.hasItemMeta()){
             ItemMeta meta = s.getItemMeta();
+            if (Settings.getInstance().hideAttributes()) meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            if (Settings.getInstance().hideDestroys()) meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+            if (Settings.getInstance().hideEnchants()) meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            if (Settings.getInstance().hidePlacedOn()) meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+            if (Settings.getInstance().hidePotionEffects()) meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
             if(meta.hasDisplayName()){
                 meta.setDisplayName(replace(meta.getDisplayName(), player));
             }

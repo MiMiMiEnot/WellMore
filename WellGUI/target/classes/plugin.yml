@@ -1,6 +1,6 @@
 name: WellGUI
 main: me.enot.wellgui.WellGUI
-version: 1.2.0.0
+version: 1.2.1.0
 
 commands:
   wellgui:
