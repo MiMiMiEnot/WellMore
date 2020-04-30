@@ -107,7 +107,7 @@ public class Serialization {
     }
 
     public static String getGUIIdByConfig(Config c){
-        String[] var1 = c.origin().filename().split(File.separator);
+        String[] var1 = c.origin().filename().split("\\\\");
         Bukkit.getConsoleSender().sendMessage(var1);
         String var2 = var1[var1.length - 1].split("\\.")[0];
         Bukkit.getConsoleSender().sendMessage(var2);

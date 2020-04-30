@@ -16,7 +16,7 @@ public class RequiredPathNotFoundException extends Exception {
     }
 
     public RequiredPathNotFoundException(String path, File file){
-        this(path, file.getName().split(File.separator)[file.getName().split(File.separator).length - 1]);
+        this(path, file.getName().split("\\\\")[file.getName().split("\\\\").length - 1]);
     }
 
     public RequiredPathNotFoundException(String path, Config config){
