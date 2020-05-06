@@ -13,6 +13,7 @@ import me.enot.wellgui.gui.guiitem.utils.GUIItemLogicType;
 import me.enot.wellgui.gui.guiitem.utils.GUIItemUtils;
 import me.enot.wellgui.gui.serializable.exception.RequiredPathNotFoundException;
 import me.enot.wellgui.gui.serializable.exception.SlotInvalidException;
+import me.enot.wellgui.gui.serializable.exception.TitleAlreadyProvidedException;
 import me.enot.wellgui.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -63,7 +64,7 @@ public class Serialization {
         for(File f : guiFiles) {
             try {
                 guis.add(load(f));
-            } catch (RequiredPathNotFoundException | SlotInvalidException e){
+            } catch (RequiredPathNotFoundException | SlotInvalidException | TitleAlreadyProvidedException e){
                 e.printStackTrace();
             }
         }
@@ -73,13 +74,19 @@ public class Serialization {
                 new Replace("\\{Y\\}", Long.toString(newTime)));
     }
 
-    public static GUI load(File f) throws RequiredPathNotFoundException, SlotInvalidException {
+    public static GUI load(File f) throws RequiredPathNotFoundException, SlotInvalidException, TitleAlreadyProvidedException {
         if(f.getName().endsWith(".conf")){
             Config c = ConfigFactory.parseFile(f);
 
             if(isValidGUISettingsConfig(c)) {
 
                 String title = c.getString(TITLE);
+                for (GUI gui : guis) {
+                    //Bukkit.getConsoleSender().sendMessage(gui.getTitle() + "\n" + title);
+                    if (gui.getTitle().equalsIgnoreCase(Message.getInstance().toColoredMessage(title, null)))
+                        throw new TitleAlreadyProvidedException("Название гуи в " + getGUIIdByConfig(c) +
+                                " такоеже как у " + gui.getId());
+                }
                 String command = c.getString(COMMAND);
                 int rows = c.getInt(ROWS);
 
@@ -107,11 +114,10 @@ public class Serialization {
     }
 
     public static String getGUIIdByConfig(Config c){
-        String[] var1 = c.origin().filename().split("\\\\");
-        Bukkit.getConsoleSender().sendMessage(var1);
-        String var2 = var1[var1.length - 1].split("\\.")[0];
-        Bukkit.getConsoleSender().sendMessage(var2);
-        return var2;
+        String[] var1 = c.origin().filename().split(File.separator);
+        //Bukkit.getConsoleSender().sendMessage(var1);
+        //Bukkit.getConsoleSender().sendMessage("            " + var1[0]);
+        return var1[var1.length - 1].split("\\.")[0];
     }
 
     public static GUIItem loadItemFromConfigByKey(Config config, String key) throws SlotInvalidException {

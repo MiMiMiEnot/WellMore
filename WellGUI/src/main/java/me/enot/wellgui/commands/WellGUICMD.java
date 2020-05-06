@@ -19,9 +19,9 @@ public class WellGUICMD implements CommandExecutor {
                     s.hasPermission(Settings.getInstance().getPermissionReloadConfigs()) ||
                     s.hasPermission(Settings.getInstance().getPermissionReloadGuis())) {
                 if (args.length >= 2) {
-                    switch (args[0]) {
+                    switch (args[0].toLowerCase()) {
                         case "reload":
-                            switch (args[1]) {
+                            switch (args[1].toLowerCase()) {
                                 case "configs":
                                     if(s.hasPermission(Settings.getInstance().getPermissionReloadConfigs())){
                                         Settings.getInstance().reload();
@@ -60,6 +60,8 @@ public class WellGUICMD implements CommandExecutor {
                             Message.getInstance().sendMessage(s, Langs.commands__wellgui__help);
                             break;
                     }
+                } else {
+                    Message.getInstance().sendMessage(s, Langs.commands__wellgui__help);
                 }
             } else {
                 Message.getInstance().sendMessage(s, Langs.commands__no_permissions);

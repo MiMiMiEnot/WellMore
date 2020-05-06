@@ -12,13 +12,15 @@ public class GUIClickEvent extends Event implements Cancellable {
     private GUI gui;
     private GUIItem clickedItem;
     private Player player;
+    private int clickedSlot;
 
     private boolean isCancelled;
 
-    public GUIClickEvent(GUI gui, GUIItem clickedItem, Player player){
+    public GUIClickEvent(GUI gui, GUIItem clickedItem, Player player, int clickedSlot){
         this.gui = gui;
         this.clickedItem = clickedItem;
         this.player = player;
+        this.clickedSlot = clickedSlot;
 
         this.isCancelled = false;
     }
@@ -33,6 +35,10 @@ public class GUIClickEvent extends Event implements Cancellable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public int getClickedSlot() {
+        return clickedSlot;
     }
 
     @Override

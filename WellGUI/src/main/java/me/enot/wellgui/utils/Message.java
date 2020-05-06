@@ -108,7 +108,7 @@ public class Message {
                 s = s.replaceAll(r.getWhat(), r.getTo());
             }
         }
-        return ChatColor.translateAlternateColorCodes('&', s);
+        return ChatColor.translateAlternateColorCodes('&', "&r" + s);
     }
 
     public List<String> toColoredMessage(List<String> list, Replace... replaces){

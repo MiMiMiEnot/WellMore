@@ -22,6 +22,13 @@ public class GUIEventsListener implements Listener {
     public void onClick(GUIClickEvent e){
         GUIItem item = e.getClickedItem();
         Player p = e.getPlayer();
+        /*Bukkit.getConsoleSender().sendMessage("GUI " + e.getGui().getId());
+        Bukkit.getConsoleSender().sendMessage("GUIItem " + e.getClickedItem().getId());
+        Bukkit.getConsoleSender().sendMessage("SLOT = " + e.getClickedItem().getSlot());*/
+        if (item == null) {
+            Bukkit.getConsoleSender().sendMessage(e.getGui().getId());
+            Bukkit.getConsoleSender().sendMessage("" + e.getClickedSlot());
+        }
         if (item.getAccessPermission() != null){
             if (p.hasPermission(item.getAccessPermission())){
                 executeItemLogic(item, p, true);
@@ -44,6 +51,8 @@ public class GUIEventsListener implements Listener {
                 }
             } else if (item.getGuiItemType() instanceof GUIItemSend) {
                 GUIItemSend gis = (GUIItemSend) item.getGuiItemType();
+                Bukkit.getConsoleSender().sendMessage(gis.getServer());
+                Bukkit.getConsoleSender().sendMessage("" + BungeeCordUtils.getInstance().getServerOnline().get(gis.getServer()));
                 if (p.hasPermission(gis.getBypassPermission()) || BungeeCordUtils.getInstance().getServerOnline().get(gis.getServer()) < gis.getMaxOnline()) {
                     BungeeCordUtils.getInstance().sendPlayerToServer(p, gis.getServer());
                 } else {

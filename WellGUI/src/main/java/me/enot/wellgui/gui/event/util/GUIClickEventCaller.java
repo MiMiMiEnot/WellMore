@@ -22,7 +22,11 @@ public class GUIClickEventCaller implements Listener {
         if(e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR && e.getWhoClicked() instanceof Player) {
             GUI gui = getGUIByInventory(e.getInventory());
             if (gui != null) {
-                GUIClickEvent guiClickEvent = new GUIClickEvent(gui, gui.getGUIItemBySlot(e.getSlot()), (Player) e.getWhoClicked());
+                GUIClickEvent guiClickEvent = new GUIClickEvent(gui,
+                        gui.getGUIItemBySlot(e.getSlot()),
+                        (Player) e.getWhoClicked(),
+                        e.getSlot()
+                );
                 Bukkit.getPluginManager().callEvent(guiClickEvent);
                 e.setCancelled(true);
             }
@@ -53,9 +57,9 @@ public class GUIClickEventCaller implements Listener {
 
     public static GUI getGUIByInventory(Inventory inventory){
         for(GUI gui : Serialization.guis){
-            if(gui.getTitle().equalsIgnoreCase(inventory.getTitle())) return gui;
+            if(gui.getTitle().equalsIgnoreCase(inventory.getTitle()))
+                return gui;
         }
         return null;
     }
-
 }

@@ -56,6 +56,7 @@ public class GUI {
 
     public GUIItem getGUIItemBySlot(int slot){
         for(GUIItem item : this.items){
+            //Bukkit.getConsoleSender().sendMessage(" " + slot + " == " + item.getSlot());
             if(item.getSlot() == slot) return item;
         }
         return null;

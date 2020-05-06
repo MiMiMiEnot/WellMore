@@ -49,7 +49,7 @@ public class Settings {
         }
         settings = ConfigFactory.parseFile(file).resolve();
         load();
-        if (createExampleConfig()) {
+        if (createExampleConfig() && !(new File(GUI_DIR, "example.conf")).exists()) {
             try {
                 Files.copy(getClass().getResourceAsStream("/example.conf"), GUI_DIR.toPath());
             } catch (IOException e){
