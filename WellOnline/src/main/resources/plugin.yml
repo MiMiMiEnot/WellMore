@@ -1,9 +1,7 @@
-name: WellOnline
-version: 1.0.4
-main: me.enot.WellOnline
+name: ${project.artifactId}
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}
 
 commands:
-  check:
-    description: "Команда для просмотра истории онлайна отдельных игроков | Command for checking history of online some players"
   wellonline:
     description: "Основная команда плагина | Main plugin command"
