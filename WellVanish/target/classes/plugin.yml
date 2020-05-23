@@ -1,0 +1,7 @@
+name: WellVanish
+main: me.enot.wellvanish.WellVanish
+version: 1.0-SNAPSHOT
+
+commands:
+  wellvanish:
+    description: "vanish command for moderators WellMore.ru"
