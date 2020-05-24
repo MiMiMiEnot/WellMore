@@ -40,7 +40,6 @@ public class WellVanishCMD implements CommandExecutor {
                         if (list.containsKey(p.getName())) {
                             Logger l = list.get(p.getName());
                             l.log();
-
                             Bukkit.getOnlinePlayers().forEach(player -> player.showPlayer(WellVanish.getPlugin(), p));
                             list.remove(p.getName(), l);
                             Message.getInstance().sendMessage(p, Langs.commands__wellvanish__vanish__disabled);

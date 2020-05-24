@@ -53,7 +53,7 @@ public class Settings {
     private String permissionVanishBypass;
     private void load(){
         permissionVanish = getSettings().getString("permissions.vanish");
-        permissionVanishHistory = getSettings().getString("permissions.vanish-histry");
+        permissionVanishHistory = getSettings().getString("permissions.vanish-history");
         permissionVanishBypass = getSettings().getString("permissions.vanish-bypass");
     }
 
