@@ -1,0 +1,13 @@
+name: SynchronizedChat
+main: me.enot.synchronizedchat.SynchronizedChat
+version: 1.6
+
+commands:
+  chat:
+    description: ""
+  ignore:
+    aliases: [i]
+  privatemessage:
+    aliases: [pm, privatem, pmessage, privatmessage, whisper, tell, w, msg, message]
+  reply:
+    aliases: [r]

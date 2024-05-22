@@ -1,0 +1,13 @@
+name: ${project.artifactId}
+main: ${project.groupId}.${project.artifactId}
+version: ${project.version}
+
+commands:
+  chat:
+    description: ""
+  ignore:
+    aliases: [i]
+  privatemessage:
+    aliases: [pm, privatem, pmessage, privatmessage, whisper, tell, w, msg, message]
+  reply:
+    aliases: [r]
