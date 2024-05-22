@@ -6,11 +6,13 @@ public class GUIItemSend implements GUIItemType {
     private String server;
     private int maxOnline;
     private String bypassPermission;
+    private boolean requireVk;
 
-    public GUIItemSend(String server, int maxOnline, String bypassPermission){
+    public GUIItemSend(String server, int maxOnline, String bypassPermission, boolean requireVk){
         this.server = server;
         this.maxOnline = maxOnline;
         this.bypassPermission = bypassPermission;
+        this.requireVk = requireVk;
     }
 
     public String getServer() {
@@ -25,4 +27,7 @@ public class GUIItemSend implements GUIItemType {
         return bypassPermission;
     }
 
+    public boolean requireVk() {
+        return requireVk;
+    }
 }

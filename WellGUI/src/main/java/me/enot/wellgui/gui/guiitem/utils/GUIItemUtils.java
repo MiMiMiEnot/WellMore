@@ -1,10 +1,13 @@
 package me.enot.wellgui.gui.guiitem.utils;
 
 import me.enot.wellgui.configurations.Settings;
+import me.enot.wellgui.configurations.language.Langs;
 import me.enot.wellgui.configurations.language.Replace;
+import me.enot.wellgui.gui.event.GUIEventsListener;
 import me.enot.wellgui.gui.guiitem.GUIItem;
 import me.enot.wellgui.gui.guiitem.GUIItemCommand;
 import me.enot.wellgui.utils.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -12,6 +15,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,7 +61,7 @@ public class GUIItemUtils {
             if(meta.hasLore()){
                 List<String> lore = replace(meta.getLore(), player);
                 if(item.getAccessPermission() != null){
-                    if(player.hasPermission(item.getAccessPermission())){
+                    if(GUIEventsListener.hasPermission(player, item.getAccessPermission())){
                         if(item.getHasAccess() != null) item.getHasAccess().forEach(string ->
                                 lore.add(Message.getInstance().toColoredMessage(string, null)));
                     } else {
@@ -67,7 +71,7 @@ public class GUIItemUtils {
                 }
                 meta.setLore(lore);
             } else if(item.getAccessPermission() != null && (item.getHasAccess() != null || item.getNoAccess() != null)){
-                if(player.hasPermission(item.getAccessPermission())) {
+                if(GUIEventsListener.hasPermission(player, item.getAccessPermission())) {
                     if(item.getHasAccess() != null) meta.setLore(item.getHasAccess());
                 } else {
                     if(item.getNoAccess() != null) meta.setLore(item.getNoAccess());
@@ -78,16 +82,34 @@ public class GUIItemUtils {
         return s;
     }
 
-    private static String replace(String s, Player player){
-        while (s.contains("{online--")) {
-            String server = s.substring(s.indexOf("{online--" + 1, s.indexOf("}")));
-            BungeeCordUtils.getInstance().sendServerOnlineRequest(server);
-            s = s.replaceAll("\\{online--" + server + "\\}", Integer.toString(BungeeCordUtils.getInstance().getServerOnline().get(server)));
+    private static String replace(String s, Player player) throws NullPointerException{
+        String r = s;
+        while (r.contains("{online--")) {
+            String server = r.substring(r.indexOf("{online--") + 9, r.indexOf("}"));
+//            Bukkit.getConsoleSender().sendMessage(server);
+//            BungeeCordUtils.getInstance().sendServerOnlineRequest(server);
+            Integer online = BungeeCordUtils.serverOnline.get(server);
+            if (online == null) {
+                r = r.replace("{online--" + server + "}", "");
+                break;
+            }
+//            if (online == null) {
+//                Message.getInstance().sendMessage(player, Langs.gui__open__please_wait);
+//
+//            }
+//            Bukkit.getConsoleSender().sendMessage(r);
+            r = r.replace("{online--" + server + "}",
+                    Integer.toString(online));
+//            Bukkit.getConsoleSender().sendMessage(r);
         }
-        return s.replaceAll("\\{player\\}", player.getName());
+        return r.replace("{player}", player.getName());
     }
     private static List<String> replace(List<String> list, Player player){
-        list.forEach(string -> replace(string, player));
-        return list;
+//        list.forEach(string -> replace(string, player));
+        List<String> returnList = new ArrayList<>();
+
+        list.forEach(string -> returnList.add(replace(string, player)));
+
+        return returnList;
     }
 }

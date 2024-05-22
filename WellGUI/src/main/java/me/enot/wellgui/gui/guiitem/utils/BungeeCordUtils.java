@@ -21,41 +21,46 @@ public class BungeeCordUtils implements PluginMessageListener {
         return BungeeCordUtilsHolder.INSTANCE;
     }
 
-    private HashMap<String, Integer> serverOnline = new HashMap<>();
+    public static HashMap<String, Integer> serverOnline = new HashMap<>();
 
-    public HashMap<String, Integer> getServerOnline() {
-        return serverOnline;
-    }
+//    public HashMap<String, Integer> getServerOnline() {
+//        return serverOnline;
+//    }
 
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-        if(!channel.equals("BungeeCord")) return;
+//        Bukkit.getConsoleSender().sendMessage("1");
+        if(!channel.equals("legacy:redisbungee") && !channel.equals("RedisBungee")) return;
 
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subchannel = in.readUTF();
-        Bukkit.getConsoleSender().sendMessage("received request");
+//        Bukkit.getConsoleSender().sendMessage("received request");
         if(subchannel.equals("PlayerCount")){
-            String server = in.readUTF();
-            int players = in.readInt();
-            Bukkit.getConsoleSender().sendMessage("PlayerCount " + server);
-            if (serverOnline.containsKey(server)) {
-                serverOnline.replace(server, players);
-            } else {
-                serverOnline.put(server, players);
-            }
+//            Bukkit.getConsoleSender().sendMessage("2");
+            try {
+                String server = in.readUTF();
+                int players = in.readInt();
+//                Bukkit.getConsoleSender().sendMessage("PlayerCount " + server + " " + players);
+                if (serverOnline.containsKey(server)) {
+                    serverOnline.replace(server, players);
+                } else {
+                    serverOnline.put(server, players);
+                }
+            } catch (IllegalStateException ignored) {}
+//            Bukkit.getConsoleSender().sendMessage("" + serverOnline.get(server));
         }
     }
 
-    public void sendServerOnlineRequest(String server){
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("PlayerCount");
-        out.writeUTF(server);
-
-        Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
-
-        player.sendPluginMessage(WellGUI.getPlugin(), "BungeeCord", out.toByteArray());
-        Bukkit.getConsoleSender().sendMessage("Send request");
-    }
+//    public void sendServerOnlineRequest(String server){
+//        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+//        out.writeUTF("PlayerCount");
+//        out.writeUTF(server);
+//
+//        Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
+//
+//        player.sendPluginMessage(WellGUI.getPlugin(), "BungeeCord", out.toByteArray());
+//        Bukkit.getConsoleSender().sendMessage("Send request");
+//    }
 
     public void sendPlayerToServer(Player player, String server){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -63,7 +68,7 @@ public class BungeeCordUtils implements PluginMessageListener {
         out.writeUTF(server);
 
         player.sendPluginMessage(WellGUI.getPlugin(), "BungeeCord", out.toByteArray());
-        Bukkit.getConsoleSender().sendMessage("Send player to " + server);
+//        Bukkit.getConsoleSender().sendMessage("Send player to " + server);
     }
 
 }

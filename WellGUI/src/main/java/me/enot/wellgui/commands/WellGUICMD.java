@@ -1,5 +1,6 @@
 package me.enot.wellgui.commands;
 
+import me.enot.wellgui.WellGUI;
 import me.enot.wellgui.configurations.Settings;
 import me.enot.wellgui.configurations.language.Langs;
 import me.enot.wellgui.configurations.language.Language;
@@ -46,6 +47,7 @@ public class WellGUICMD implements CommandExecutor {
                                         Language.getInstance().reload();
                                         Serialization.guis.clear();
                                         Serialization.load();
+                                        WellGUI.getPinger().restart();
                                         Message.getInstance().sendMessage(s, Langs.commands__wellgui__reload_all);
                                     } else {
                                         Message.getInstance().sendMessage(s, Langs.commands__no_permissions);

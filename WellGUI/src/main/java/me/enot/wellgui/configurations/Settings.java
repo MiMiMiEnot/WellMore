@@ -10,8 +10,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.List;
 
 public class Settings {
+
+    public List<String> getToPingServer() {
+        return toPingServer;
+    }
+
+    public int getPingEvery() {
+        return pingEvery;
+    }
 
     protected static class SettingsHolder {
         public static final Settings INSTANCE = new Settings();
@@ -69,6 +78,15 @@ public class Settings {
     private boolean hidePlacedOn;
     private boolean hidePotionEffects;
     private boolean createExampleConfig;
+
+    private int pingEvery;
+    private List<String> toPingServer;
+
+    private Object host;
+    private int port;
+    private String user;
+    private String password;
+    private String db;
     private void load(){
         permissionReloadAll = getSettings().getString("permissions.wellgui.reload-all");
         permissionReloadConfigs = getSettings().getString("permissions.wellgui.reload-configs");
@@ -79,6 +97,15 @@ public class Settings {
         hidePlacedOn = getSettings().getBoolean("item-flags.hide-placed-on");
         hidePotionEffects = getSettings().getBoolean("item-flags.hide-potion-effects");
         createExampleConfig = getSettings().getBoolean("create-example-gui");
+
+        pingEvery = getSettings().getInt("ping.ping-every");
+        toPingServer = getSettings().getStringList("ping.servers");
+
+        host = settings.getAnyRef("mysql.host");
+        port = settings.getInt("mysql.port");
+        user = settings.getString("mysql.user");
+        password = settings.getString("mysql.password");
+        db = settings.getString("mysql.db");
     }
 
     public String getPermissionReloadAll() {
@@ -120,5 +147,23 @@ public class Settings {
     public Config getSettings() {
         return settings;
     }
+    public Object getHost() {
+        return host;
+    }
 
+    public int getPort() {
+        return port;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getDb() {
+        return db;
+    }
 }

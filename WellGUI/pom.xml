@@ -6,7 +6,7 @@
 
     <groupId>me.enot</groupId>
     <artifactId>WellGUI</artifactId>
-    <version>1.2.2#6</version>
+    <version>1.2.6</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -26,6 +26,10 @@
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
+        <repository>
+            <id>md_5-snapshots</id>
+            <url>http://repo.md-5.net/content/repositories/snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -44,6 +48,23 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>28.2-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.20</version>
+        </dependency>
+        <dependency>
+            <groupId>com.imaginarycode.minecraft</groupId>
+            <artifactId>RedisBungee</artifactId>
+            <version>0.3.6-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

@@ -49,12 +49,14 @@ public class Serialization {
     private static final String SERVER = ".item-logic.server";
     private static final String MAX_ONLINE = ".item-logic.max-online";
     private static final String BYPASS_PERMISSION = ".item-logic.bypass-permission";
+    private static final String VK_REQUIRE = ".item-logic.require-vk";
 
     private static final String ACCESS_PERMISSION = ".access-permission";
     private static final String NO_ACCESS = ".no-access";
     private static final String HAS_ACCESS = ".has-access";
     private static final String NO_ACCESS_MESSAGE = ".no-access-message";
     private static final String HAS_ACCESS_MESSAGE = ".has-access-message";
+    private static final String VISIBLE = ".visible";
 
     public static List<GUI> guis = new ArrayList<>();
 
@@ -87,7 +89,7 @@ public class Serialization {
                         throw new TitleAlreadyProvidedException("Название гуи в " + getGUIIdByConfig(c) +
                                 " такоеже как у " + gui.getId());
                 }
-                String command = c.getString(COMMAND);
+                String command = c.hasPath(COMMAND) ? c.getString(COMMAND) : null;
                 int rows = c.getInt(ROWS);
 
                 List<String> keys = new ArrayList<>();
@@ -131,16 +133,18 @@ public class Serialization {
         ItemStack stack = GUIItemUtils.getStack(material, amount, data, displayName, lore, enchants);
         int slot = GUIItemUtils.calculateSlot(config.getInt(string + SLOTS_X), config.getInt(string + SLOTS_Y));
         GUIItemType guiItemType = loadGUIItemType(config, key);
-        String accessPermission = config.hasPath(string + ACCESS_PERMISSION) ? config.getString(string + ACCESS_PERMISSION) : null;
+        List<String> accessPermission = loadListByAnything(config, string + ACCESS_PERMISSION);
         List<String> noAccess = loadListByAnything(config, string + NO_ACCESS);
         List<String> hasAccess = loadListByAnything(config, string + HAS_ACCESS);
         List<String> noAccessMessage = loadListByAnything(config, string + NO_ACCESS_MESSAGE);
         List<String> hasAccessMessage = loadListByAnything(config, string + HAS_ACCESS_MESSAGE);
+        String visible = config.hasPath(string + VISIBLE) ? config.getString(string + VISIBLE) : null;
+
 
         int maxSlots = config.getInt("rows") * 9;
         if(maxSlots < slot || slot < 0) throw new SlotInvalidException(key, slot, config);
 
-        return new GUIItem(key, stack, slot, guiItemType, accessPermission, noAccess, hasAccess, noAccessMessage, hasAccessMessage);
+        return new GUIItem(key, stack, slot, guiItemType, accessPermission, noAccess, hasAccess, noAccessMessage, hasAccessMessage, visible);
     }
 
     private static HashMap<Enchantment, Integer> loadEnchMaps(Config c, String key){
@@ -180,7 +184,8 @@ public class Serialization {
                     String server = c.getString(string + SERVER);
                     int maxOnline = c.getInt(string + MAX_ONLINE);
                     String bypassPermission = c.getString(string + BYPASS_PERMISSION);
-                    return new GUIItemSend(server, maxOnline, bypassPermission);
+                    boolean requireVk = c.hasPath(string + VK_REQUIRE) && c.getBoolean(string + VK_REQUIRE);
+                    return new GUIItemSend(server, maxOnline, bypassPermission, requireVk);
             }
         }
         return null;
@@ -211,7 +216,7 @@ public class Serialization {
 
     public static boolean isValidGUISettingsConfig(Config c) throws RequiredPathNotFoundException {
         if(!c.hasPath(TITLE)) throw new RequiredPathNotFoundException(TITLE, c);
-        if(!c.hasPath(COMMAND)) throw new RequiredPathNotFoundException(COMMAND, c);
+//        if(!c.hasPath(COMMAND)) throw new RequiredPathNotFoundException(COMMAND, c);
         if(!c.hasPath(ROWS)) throw new RequiredPathNotFoundException(ROWS, c);
         return true;
     }
@@ -244,7 +249,8 @@ public class Serialization {
 
     public static GUI getGUIByCommand(String command){
         for(GUI gui : guis){
-            if(gui.getCommand().equalsIgnoreCase(command)) return gui;
+            if(gui.getCommand() != null && gui.getCommand().equalsIgnoreCase(command))
+                return gui;
         }
         return null;
     }

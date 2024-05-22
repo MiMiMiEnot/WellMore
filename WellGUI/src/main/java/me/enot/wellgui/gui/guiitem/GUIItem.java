@@ -10,16 +10,18 @@ public class GUIItem {
     private ItemStack stack;
     private int slot;
     private GUIItemType guiItemType;
-    private String accessPermission;
+    private List<String> accessPermission;
     private List<String> noAccess;
     private List<String> hasAccess;
 
     private List<String> noAccessMessage;
     private List<String> hasAccessMessage;
 
+    private String visible;
+
     public GUIItem(String id, ItemStack stack, int slot, GUIItemType guiItemType,
-                   String accessPermission, List<String> noAccess, List<String> hasAccess,
-                   List<String> noAccessMessage, List<String> hasAccessMessage){
+                   List<String> accessPermission, List<String> noAccess, List<String> hasAccess,
+                   List<String> noAccessMessage, List<String> hasAccessMessage, String visible){
         this.id = id;
         this.stack = stack;
         this.slot = slot;
@@ -29,8 +31,8 @@ public class GUIItem {
         this.hasAccess = hasAccess;
         this.noAccessMessage = noAccessMessage;
         this.hasAccessMessage = hasAccessMessage;
+        this.visible = visible;
     }
-
 
     public GUIItemType getGuiItemType() {
         return guiItemType;
@@ -56,7 +58,7 @@ public class GUIItem {
         return noAccess;
     }
 
-    public String getAccessPermission() {
+    public List<String> getAccessPermission() {
         return accessPermission;
     }
 
@@ -68,7 +70,7 @@ public class GUIItem {
         return noAccessMessage;
     }
 
-    public void setAccessPermission(String accessPermission) {
+    public void setAccessPermission(List<String> accessPermission) {
         this.accessPermission = accessPermission;
     }
 
@@ -94,5 +96,9 @@ public class GUIItem {
 
     public void setNoAccessMessage(List<String> noAccessMessage) {
         this.noAccessMessage = noAccessMessage;
+    }
+
+    public String getVisible() {
+        return visible;
     }
 }
